@@ -1,0 +1,73 @@
+# Демонстрация HDFS и YARN
+
+## Запускаем HDFS и YARN
+$ docker compose up -d
+$ docker compose ps -a
+
+## HDFS 
+### Веб-интерфейс Namenode
+http://localhost:9870
+
+### Подключаемся к Namenode
+$ docker exec -ti namenode /bin/bash
+
+### Посмотрим на команды hdfs
+hdfs
+
+### Посмотрим корневую структуру папок hdfs
+hdfs dfs -ls /
+
+### Создадим локальный файл:
+cat > a.txt
+aaa bbb ccc
+^D (Control+D)
+
+### Создадим директорию
+hdfs dfs -mkdir -p /data
+
+### Загрузим локальный a.txt в HDFS и проверим загрузку
+hdfs dfs -put a.txt /data
+hdfs dfs -ls /data
+hdfs dfs -cat /data/a.txt
+
+### Изменим файл локально
+cat > a.txt
+fff
+ggg
+hhh
+^D (Control+D)
+cat a.txt
+
+### Перезапишем его в hdfs
+hdfs dfs -put a.txt /data    // File already exists!
+hdfs dfs -put -f a.txt /data // Force file rewrite
+hdfs dfs -cat /data/a.txt
+
+## Посмотрим где лежит файл
+hdfs fsck /data/a.txt -files -blocks -locations
+/data/a.txt 7 bytes, replicated: replication=3, 1 block(s):  Under replicated BP-54015084-172.18.0.6-1629173599639:blk_1073741835_1011
+
+### Подключаемся на Datanode
+
+$ docker exec -ti datanode1 /bin/bash
+
+### Поищем где лежит файл
+find . -name blk_1073741835
+cd <найденный_путь>
+cat blk_1073741835
+
+
+
+## YARN
+### Веб-интерфейс ResourceManager
+http://localhost:8088
+
+### Запускаем задание MapReduce
+$ docker exec -ti resourcemanager yarn jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.4.1.jar pi 10 15
+
+
+
+## Spark
+### Запускаем приложение Spark
+$ docker exec -ti resourcemanager /opt/spark/bin/spark-submit --master yarn --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.12-3.5.4.jar
+

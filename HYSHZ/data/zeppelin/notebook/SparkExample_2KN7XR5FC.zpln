@@ -1,0 +1,148 @@
+{
+  "paragraphs": [
+    {
+      "text": "val sales \u003d spark.read.option(\"inferSchema\", true).option(\"header\", true).csv(\"/data/sales-data-sample.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "2025-02-10 19:45:02.335",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34msales\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [OrderDate: timestamp, Category: string ... 26 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d0"
+            },
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d1"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1739179163415_517353034",
+      "id": "paragraph_1739179163415_517353034",
+      "dateCreated": "2025-02-10 09:19:23.418",
+      "dateStarted": "2025-02-10 19:45:02.354",
+      "dateFinished": "2025-02-10 19:45:39.071",
+      "status": "FINISHED"
+    },
+    {
+      "text": "sales.show(10, false)",
+      "user": "anonymous",
+      "dateUpdated": "2025-02-10 19:45:41.711",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+---------------+------------+-------------+-------------+--------+--------------+----------+----------------------------------------------------------------------+------+--------+-------+-----+-----------+-------------------+--------------+------------+------------+----------------+-------------+---------------+-------------------+---------------+----------------+-----------+----------------+--------+---------+\n|OrderDate          |Category       |City        |Country      |CustomerName |Discount|OrderID       |PostalCode|ProductName                                                           |Profit|Quantity|Region |Sales|Segment    |ShipDate           |ShipMode      |State       |Sub_Category|DaystoShipActual|SalesForecast|ShipStatus     |DaystoShipScheduled|OrderProfitable|SalesperCustomer|ProfitRatio|SalesaboveTarget|latitude|longitude|\n+-------------------+---------------+------------+-------------+-------------+--------+--------------+----------+----------------------------------------------------------------------+------+--------+-------+-----+-----------+-------------------+--------------+------------+------------+----------------+-------------+---------------+-------------------+---------------+----------------+-----------+----------------+--------+---------+\n|2011-01-04 00:00:00|Office Supplies|Houston     |United States|Darren Powers|0.2     |CA-2011-103800|77095     |Message Book, Wirebound, Four 5 1/2 X 4 Forms/Pg., 200 Dupl. Sets/Book|6     |2       |Central|16   |Consumer   |2011-01-08 00:00:00|Standard Class|Texas       |Paper       |4               |22           |Shipped Early  |6                  |null           |16.45           |33.8       |null            |29.8941 |-95.6481 |\n|2011-01-05 00:00:00|Office Supplies|Naperville  |United States|Phillina Ober|0.2     |CA-2011-112326|60540     |Avery 508                                                             |4     |3       |Central|12   |Home Office|2011-01-09 00:00:00|Standard Class|Illinois    |Labels      |4               |15           |Shipped Early  |6                  |null           |11.78           |36.3       |null            |41.7662 |-88.141  |\n|2011-01-05 00:00:00|Office Supplies|Naperville  |United States|Phillina Ober|0.8     |CA-2011-112326|60540     |GBC Standard Plastic Binding Systems Combs                            |-5    |2       |Central|4    |Home Office|2011-01-09 00:00:00|Standard Class|Illinois    |Binders     |4               |5            |Shipped Early  |6                  |null           |3.54            |-155.0     |null            |41.7662 |-88.141  |\n|2011-01-05 00:00:00|Office Supplies|Naperville  |United States|Phillina Ober|0.2     |CA-2011-112326|60540     |SAFCO Boltless Steel Shelving                                         |-65   |3       |Central|273  |Home Office|2011-01-09 00:00:00|Standard Class|Illinois    |Storage     |4               |357          |Shipped Early  |6                  |null           |272.74          |-23.8      |null            |41.7662 |-88.141  |\n|2011-01-06 00:00:00|Office Supplies|Philadelphia|United States|Mick Brown   |0.2     |CA-2011-141817|19143     |Avery Hi-Liter EverBold Pen Style Fluorescent Highlighters, 4/Pack    |5     |3       |East   |20   |Consumer   |2011-01-13 00:00:00|Standard Class|Pennsylvania|Art         |7               |26           |Shipped Late   |6                  |null           |19.54           |25.0       |null            |39.9448 |-75.2288 |\n|2011-01-07 00:00:00|Furniture      |Henderson   |United States|Maria Etezadi|0.0     |CA-2011-167199|42420     |Global Deluxe High-Back Managers Chair                                |746   |9       |South  |2574 |Home Office|2011-01-11 00:00:00|Standard Class|Kentucky    |Chairs      |4               |3373         |Shipped Early  |6                  |null           |2573.82         |29.0       |null            |37.8274 |-87.5632 |\n|2011-01-07 00:00:00|Office Supplies|Athens      |United States|Jack OBriant |0.0     |CA-2011-106054|30605     |Dixon Prang Watercolor Pencils, 10-Color Set with Brush               |5     |3       |South  |13   |Corporate  |2011-01-08 00:00:00|First Class   |Georgia     |Art         |1               |17           |Shipped On Time|1                  |null           |12.78           |41.0       |null            |33.9321 |-83.3525 |\n|2011-01-07 00:00:00|Office Supplies|Henderson   |United States|Maria Etezadi|0.0     |CA-2011-167199|42420     |Alliance Super-Size Bands, Assorted Sizes                             |0     |4       |South  |31   |Home Office|2011-01-11 00:00:00|Standard Class|Kentucky    |Fasteners   |4               |41           |Shipped Early  |6                  |null           |31.12           |1.0        |null            |37.8274 |-87.5632 |\n|2011-01-07 00:00:00|Office Supplies|Henderson   |United States|Maria Etezadi|0.0     |CA-2011-167199|42420     |Ibico Hi-Tech Manual Binding System                                   |274   |2       |South  |610  |Home Office|2011-01-11 00:00:00|Standard Class|Kentucky    |Binders     |4               |799          |Shipped Early  |6                  |null           |609.98          |45.0       |null            |37.8274 |-87.5632 |\n|2011-01-07 00:00:00|Office Supplies|Henderson   |United States|Maria Etezadi|0.0     |CA-2011-167199|42420     |Rogers Handheld Barrel Pencil Sharpener                               |1     |2       |South  |5    |Home Office|2011-01-11 00:00:00|Standard Class|Kentucky    |Art         |4               |7            |Shipped Early  |6                  |null           |5.48            |27.0       |null            |37.8274 |-87.5632 |\n+-------------------+---------------+------------+-------------+-------------+--------+--------------+----------+----------------------------------------------------------------------+------+--------+-------+-----+-----------+-------------------+--------------+------------+------------+----------------+-------------+---------------+-------------------+---------------+----------------+-----------+----------------+--------+---------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://zeppelin:4040/jobs/job?id\u003d2"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1739179244127_666914300",
+      "id": "paragraph_1739179244127_666914300",
+      "dateCreated": "2025-02-10 09:20:44.127",
+      "dateStarted": "2025-02-10 19:45:41.719",
+      "dateFinished": "2025-02-10 19:45:42.490",
+      "status": "FINISHED"
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "2025-02-10 09:54:19.318",
+      "progress": 0,
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1739181249206_438860560",
+      "id": "paragraph_1739181249206_438860560",
+      "dateCreated": "2025-02-10 09:54:09.206",
+      "status": "READY"
+    }
+  ],
+  "name": "SparkExample",
+  "id": "2KN7XR5FC",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.12.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

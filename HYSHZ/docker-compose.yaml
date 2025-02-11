@@ -1,0 +1,200 @@
+services:
+  namenode:
+    image: apache/hadoop:3.4.1
+    container_name: namenode
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    ports:
+      - 9870:9870
+    env_file:
+      - ./config/hadoop.conf
+    environment:
+      - ENSURE_NAMENODE_DIR="/data/hadoop-root/dfs/name"
+    volumes:
+      - ./data/namenode:/data/hadoop-root/dfs/name
+      - ./data/samples:/data/samples
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  datanode1:
+    image: apache/hadoop:3.4.1
+    container_name: datanode1
+    hostname: datanode1
+    command: ["hdfs", "datanode"]
+    ports:
+      - 9864:9864
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./data/datanode1:/data/hadoop-root/dfs/data
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  datanode2:
+    image: apache/hadoop:3.4.1
+    container_name: datanode2
+    hostname: datanode2
+    command: ["hdfs", "datanode"]
+    ports:
+      - 9865:9864
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./data/datanode2:/data/hadoop-root/dfs/data
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  datanode3:
+    image: apache/hadoop:3.4.1
+    container_name: datanode3
+    hostname: datanode3
+    command: ["hdfs", "datanode"]
+    ports:
+      - 9866:9864
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./data/datanode3:/data/hadoop-root/dfs/data
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  resourcemanager:
+    image: apache/hadoop:3.4.1
+    container_name: resourcemanager
+    hostname: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    ports:
+      - 8088:8088
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  nodemanager1:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager1
+    hostname: nodemanager1
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  nodemanager2:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager2
+    hostname: nodemanager2
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  nodemanager3:
+    image: apache/hadoop:3.4.1
+    container_name: nodemanager3
+    hostname: nodemanager3
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config/hadoop.conf
+    volumes:
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+    networks:
+      - hadoop
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_DB: 'metastore_db'
+      POSTGRES_USER: 'hive'
+      POSTGRES_PASSWORD: 'password'
+    ports:
+      - 5432:5432
+    volumes:
+      - hive-db:/var/lib/postgresql
+    networks:
+      - hadoop
+
+  metastore:
+    image: apache/hive:4.0.1
+    depends_on:
+      - postgres
+    container_name: metastore
+    hostname: metastore
+    environment:
+      DB_DRIVER: postgres
+      SERVICE_NAME: 'metastore'
+      SERVICE_OPTS: '-Xmx1G -Djavax.jdo.option.ConnectionDriverName=org.postgresql.Driver
+                     -Djavax.jdo.option.ConnectionURL=jdbc:postgresql://postgres:5432/metastore_db
+                     -Djavax.jdo.option.ConnectionUserName=hive
+                     -Djavax.jdo.option.ConnectionPassword=password'
+    ports:
+      - 9083:9083
+    volumes:
+      - warehouse:/opt/hive/data/warehouse
+      - ./postgres/postgresql-42.7.3.jar:/opt/hive/lib/postgres.jar
+    networks:
+      - hadoop
+
+  hiveserver2:
+    image: apache/hive:4.0.1
+    depends_on:
+      - metastore
+    container_name: hiveserver2
+    hostname: hiveserver2
+    environment:
+      HIVE_SERVER2_THRIFT_PORT: 10000
+      SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
+      IS_RESUME: 'true'
+      SERVICE_NAME: 'hiveserver2'
+      HIVE_CUSTOM_CONF_DIR: /hive_custom_conf
+    ports:
+      - 10000:10000
+      - 10002:10002
+    volumes:
+      - ./config/hive:/hive_custom_conf
+      - warehouse:/opt/hive/data/warehouse
+      - ./data/hive:/data
+    networks:
+      - hadoop
+
+  zeppelin:
+    image: apache/zeppelin:0.12.0
+    container_name: zeppelin
+    hostname: zeppelin
+    user: "1000"
+    environment:
+      - ZEPPELIN_LOG_DIR=/logs
+      - ZEPPELIN_NOTEBOOK_DIR=/notebook
+      - HADOOP_HOME=/opt/hadoop
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+      - SPARK_HOME=/opt/spark
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/zeppelin/notebook:/notebook 
+      - ./data/zeppelin/logs:/logs
+      - ./spark-3.5.4-bin-hadoop3:/opt/spark
+      - ./hadoop-3.4.1:/opt/hadoop
+    networks:
+      - hadoop
+
+volumes:
+  hive-db:
+  warehouse:
+
+networks:
+  hadoop:
+    name: hadoop
