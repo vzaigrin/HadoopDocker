@@ -3,7 +3,7 @@
     {
       "text": "val sales \u003d spark.read.option(\"inferSchema\", true).option(\"header\", true).csv(\"/data/sales-data-sample.csv\")",
       "user": "anonymous",
-      "dateUpdated": "2025-02-10 19:45:02.335",
+      "dateUpdated": "2025-02-12 18:25:41.927",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -52,14 +52,14 @@
       "jobName": "paragraph_1739179163415_517353034",
       "id": "paragraph_1739179163415_517353034",
       "dateCreated": "2025-02-10 09:19:23.418",
-      "dateStarted": "2025-02-10 19:45:02.354",
-      "dateFinished": "2025-02-10 19:45:39.071",
+      "dateStarted": "2025-02-12 18:25:41.950",
+      "dateFinished": "2025-02-12 18:26:16.765",
       "status": "FINISHED"
     },
     {
       "text": "sales.show(10, false)",
       "user": "anonymous",
-      "dateUpdated": "2025-02-10 19:45:41.711",
+      "dateUpdated": "2025-02-12 18:26:26.481",
       "progress": 0,
       "config": {
         "colWidth": 12.0,
@@ -105,8 +105,8 @@
       "jobName": "paragraph_1739179244127_666914300",
       "id": "paragraph_1739179244127_666914300",
       "dateCreated": "2025-02-10 09:20:44.127",
-      "dateStarted": "2025-02-10 19:45:41.719",
-      "dateFinished": "2025-02-10 19:45:42.490",
+      "dateStarted": "2025-02-12 18:26:26.488",
+      "dateFinished": "2025-02-12 18:26:28.968",
       "status": "FINISHED"
     },
     {
