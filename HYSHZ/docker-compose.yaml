@@ -9,9 +9,9 @@ services:
     env_file:
       - ./config/hadoop.conf
     environment:
-      - ENSURE_NAMENODE_DIR="/data/hadoop-root/dfs/name"
+#        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
     volumes:
-      - ./data/namenode:/data/hadoop-root/dfs/name
+      - ./data/namenode:/tmp/hadoop-hadoop/dfs/name
       - ./data/samples:/data/samples
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
@@ -27,7 +27,7 @@ services:
     env_file:
       - ./config/hadoop.conf
     volumes:
-      - ./data/datanode1:/data/hadoop-root/dfs/data
+      - ./data/datanode1:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -42,7 +42,7 @@ services:
     env_file:
       - ./config/hadoop.conf
     volumes:
-      - ./data/datanode2:/data/hadoop-root/dfs/data
+      - ./data/datanode2:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -57,7 +57,7 @@ services:
     env_file:
       - ./config/hadoop.conf
     volumes:
-      - ./data/datanode3:/data/hadoop-root/dfs/data
+      - ./data/datanode3:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
