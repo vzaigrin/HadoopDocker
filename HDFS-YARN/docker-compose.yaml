@@ -9,7 +9,9 @@ services:
       env_file:
         - ./config
       environment:
-        - ENSURE_NAMENODE_DIR="/data/hadoop-root/dfs/name"
+#        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
+      volumes:
+        - ./data/namenode:/tmp/hadoop-hadoop/dfs/name
 
    datanode1:
       image: apache/hadoop:3.4.1
@@ -20,6 +22,8 @@ services:
         - 9864:9864
       env_file:
         - ./config      
+      volumes:
+        - ./data/datanode1:/tmp/hadoop-hadoop/dfs/data
 
    datanode2:
       image: apache/hadoop:3.4.1
@@ -30,6 +34,8 @@ services:
         - 9865:9864
       env_file:
         - ./config      
+      volumes:
+        - ./data/datanode2:/tmp/hadoop-hadoop/dfs/data
 
    datanode3:
       image: apache/hadoop:3.4.1
@@ -40,6 +46,8 @@ services:
         - 9866:9864
       env_file:
         - ./config      
+      volumes:
+        - ./data/datanode3:/tmp/hadoop-hadoop/dfs/data
 
    resourcemanager:
       image: apache/hadoop:3.4.1
