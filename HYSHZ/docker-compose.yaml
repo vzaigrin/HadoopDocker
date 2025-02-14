@@ -6,14 +6,14 @@ services:
     command: ["hdfs", "namenode"]
     ports:
       - 9870:9870
-    env_file:
-      - ./config/hadoop.conf
     environment:
-#        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
+      - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./data/dfs/namenode:/tmp/hadoop-hadoop/dfs/name
       - ./data/samples:/data/samples
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
+      - ./scripts:/opt/hadoop/scripts
     networks:
       - hadoop
 
@@ -24,9 +24,8 @@ services:
     command: ["hdfs", "datanode"]
     ports:
       - 9864:9864
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./data/dfs/datanode1:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
@@ -39,9 +38,8 @@ services:
     command: ["hdfs", "datanode"]
     ports:
       - 9865:9864
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./data/dfs/datanode2:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
@@ -54,9 +52,8 @@ services:
     command: ["hdfs", "datanode"]
     ports:
       - 9866:9864
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./data/dfs/datanode3:/tmp/hadoop-hadoop/dfs/data
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
@@ -69,9 +66,10 @@ services:
     command: ["yarn", "resourcemanager"]
     ports:
       - 8088:8088
-    env_file:
-      - ./config/hadoop.conf
+    environment:
+      - SPARK_HOME=/opt/spark
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -81,9 +79,8 @@ services:
     container_name: nodemanager1
     hostname: nodemanager1
     command: ["yarn", "nodemanager"]
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -93,9 +90,8 @@ services:
     container_name: nodemanager2
     hostname: nodemanager2
     command: ["yarn", "nodemanager"]
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -105,9 +101,8 @@ services:
     container_name: nodemanager3
     hostname: nodemanager3
     command: ["yarn", "nodemanager"]
-    env_file:
-      - ./config/hadoop.conf
     volumes:
+      - ./config/hadoop:/opt/hadoop/etc/hadoop
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
     networks:
       - hadoop
@@ -123,7 +118,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - hive-db:/var/lib/postgresql
+      - ./data/postgresql:/var/lib/postgresql
     networks:
       - hadoop
 
@@ -143,7 +138,6 @@ services:
     ports:
       - 9083:9083
     volumes:
-      - warehouse:/opt/hive/data/warehouse
       - ./postgres/postgresql-42.7.3.jar:/opt/hive/lib/postgres.jar
     networks:
       - hadoop
@@ -155,6 +149,7 @@ services:
     container_name: hiveserver2
     hostname: hiveserver2
     environment:
+      HADOOP_HOME: /opt/hadoop
       HIVE_SERVER2_THRIFT_PORT: 10000
       SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
       IS_RESUME: 'true'
@@ -165,8 +160,7 @@ services:
       - 10002:10002
     volumes:
       - ./config/hive:/hive_custom_conf
-      - warehouse:/opt/hive/data/warehouse
-      - ./data/hive:/data
+      - ./data/samples:/data/samples
     networks:
       - hadoop
 
@@ -187,13 +181,10 @@ services:
       - ./data/zeppelin/notebook:/notebook 
       - ./data/zeppelin/logs:/logs
       - ./spark-3.5.4-bin-hadoop3:/opt/spark
+      - ./config/hive/hive-site.xml:/opt/spark/conf/hive-site.xml
       - ./hadoop-3.4.1:/opt/hadoop
     networks:
       - hadoop
-
-volumes:
-  hive-db:
-  warehouse:
 
 networks:
   hadoop:

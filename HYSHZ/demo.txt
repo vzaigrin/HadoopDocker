@@ -17,22 +17,10 @@ hdfs
 ### Посмотрим корневую структуру папок hdfs
 hdfs dfs -ls /
 
-### Создадим папку и изменим права доступа
-hdfs dfs -mkdir -p /user/zeppelin
-hdfs dfs -chown zeppelin /user/zeppelin
-hdfs dfs -ls /user
-
 ### Создадим локальный файл:
 cat > a.txt
 aaa bbb ccc
 ^D (Control+D)
-
-### Создадим директорию
-hdfs dfs -mkdir -p /data
-
-### Загрузим локальный файл в HDFS и проверим загрузку
-hdfs dfs -put /data/samples/sales-data-sample.csv /data
-hdfs dfs -ls /data
 
 ### Загрузим локальный a.txt в HDFS и проверим загрузку
 hdfs dfs -put a.txt /data
