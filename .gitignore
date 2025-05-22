@@ -1,3 +1,4 @@
+**/.DS_Store
 **/*.jar
 **/spark-3.5.4-bin-hadoop3
 **/hadoop-3.4.1
