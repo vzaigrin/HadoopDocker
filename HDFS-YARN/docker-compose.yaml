@@ -8,7 +8,7 @@ services:
         - 9870:9870
       env_file:
         - ./config
-      environment:
+#      environment:
 #        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
       volumes:
         - ./data/namenode:/tmp/hadoop-hadoop/dfs/name
