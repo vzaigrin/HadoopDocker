@@ -9,7 +9,7 @@ services:
       env_file:
         - ./config
       environment:
-#        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
+        - ENSURE_NAMENODE_DIR="/tmp/hadoop-hadoop/dfs/name" # For first start to format dfs
       volumes:
         - ./data/namenode:/tmp/hadoop-hadoop/dfs/name
         - ./spark-3.5.4-bin-hadoop3:/opt/spark
