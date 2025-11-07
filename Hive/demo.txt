@@ -126,6 +126,11 @@ FROM (
     WHERE gender_age.gender = 'Male'
 ) t1;
 
+
+SELECT name, gender_age.gender AS gender
+FROM employee
+WHERE gender_age.gender = 'Male';
+
 -- Filter with in
 SELECT name FROM employee WHERE gender_age.age in (27, 30);
 
