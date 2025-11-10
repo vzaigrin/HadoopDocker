@@ -31,7 +31,7 @@ hdfs dfs -ls /data
 hdfs dfs -cat /data/a.txt
 
 ### Изменим файл локально
-cat > a.txt
+cat >> a.txt
 fff
 ggg
 hhh
