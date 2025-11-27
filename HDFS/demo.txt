@@ -30,7 +30,7 @@ hdfs dfs -ls /data
 hdfs dfs -cat /data/a.txt
 
 ### Изменим файлик локально
-cat > a.txt
+cat >> a.txt
 fff
 ggg
 hhh
@@ -54,4 +54,3 @@ $ docker exec -ti datanode1 /bin/bash
 find . -name blk_1073741835
 cd <найденный_путь>
 cat blk_1073741835
-
